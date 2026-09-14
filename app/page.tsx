@@ -633,6 +633,31 @@ Total: ${currency.format(totals.total)}`;
     setSaveState("Invoice summary copied");
   };
 
+  const actionButtons = (
+    <>
+      <button type="button" onClick={saveInvoice}>
+        Save invoice
+      </button>
+      <button type="button" onClick={shareInvoice}>
+        Share PDF
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          if (requireValidInvoice()) window.print();
+        }}
+      >
+        Print
+      </button>
+      <button type="button" className="secondary" onClick={startNewInvoice}>
+        New
+      </button>
+      <button type="button" className="secondary" onClick={copyInvoiceSummary}>
+        Copy summary
+      </button>
+    </>
+  );
+
   if (!authenticated) {
     return (
       <main className="auth-shell">
@@ -707,32 +732,7 @@ Total: ${currency.format(totals.total)}`;
           <span className="save-state">{saveState}</span>
           {formError ? <span className="form-error">{formError}</span> : null}
           {activeView === "generator" ? (
-            <>
-              <button type="button" onClick={saveInvoice}>
-                Save invoice
-              </button>
-              <button type="button" onClick={shareInvoice}>
-                Share PDF
-              </button>
-              <button type="button" className="secondary" onClick={copyInvoiceSummary}>
-                Copy summary
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  if (requireValidInvoice()) window.print();
-                }}
-              >
-                Print
-              </button>
-              <button
-                type="button"
-                className="secondary"
-                onClick={startNewInvoice}
-              >
-                New
-              </button>
-            </>
+            <div className="desktop-actions">{actionButtons}</div>
           ) : null}
         </div>
       </section>
@@ -807,6 +807,7 @@ Total: ${currency.format(totals.total)}`;
       ) : null}
 
       {activeView === "generator" ? (
+        <>
         <section className="workspace">
           <form className="editor no-print">
             <fieldset>
@@ -1074,6 +1075,8 @@ Total: ${currency.format(totals.total)}`;
             </footer>
           </article>
         </section>
+        <section className="mobile-actions no-print">{actionButtons}</section>
+        </>
       ) : null}
     </main>
   );

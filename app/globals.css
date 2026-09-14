@@ -183,6 +183,17 @@ button.secondary {
   justify-content: flex-end;
 }
 
+.desktop-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.mobile-actions {
+  display: none;
+}
+
 .save-state {
   color: var(--muted);
   font-size: 14px;
@@ -616,6 +627,12 @@ textarea {
     flex: 1 1 130px;
   }
 
+  .desktop-actions {
+    display: flex;
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
+
   .grid-two,
   .settings-grid {
     grid-template-columns: 1fr;
@@ -709,6 +726,8 @@ textarea {
   .menu-links button,
   .menu-bar > button,
   .actions button,
+  .desktop-actions button,
+  .mobile-actions button,
   .saved-actions button,
   .settings-actions button {
     width: 100%;
@@ -722,6 +741,18 @@ textarea {
     align-items: stretch;
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .desktop-actions {
+    display: none;
+  }
+
+  .mobile-actions {
+    display: grid;
+    gap: 10px;
+    margin: 14px auto 0;
+    max-width: 720px;
+    width: 100%;
   }
 
   .save-state,
