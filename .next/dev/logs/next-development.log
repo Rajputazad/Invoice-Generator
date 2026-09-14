@@ -1,0 +1,48 @@
+{"timestamp":"00:00:00.472","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:09.872","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:13.675","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:23.055","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:31.801","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:43.135","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:52.774","source":"Browser","level":"DEBUG","message":"#1 0ms Starting document clone with size 1280x720 scrolled to 0,0"}
+{"timestamp":"00:00:53.019","source":"Browser","level":"DEBUG","message":"#1 70ms Document cloned, element located at 482,186 with size 774x1123 using computed rendering"}
+{"timestamp":"00:00:53.019","source":"Browser","level":"DEBUG","message":"#1 70ms Starting DOM parsing"}
+{"timestamp":"00:00:53.019","source":"Browser","level":"DEBUG","message":"#1 77ms Added image http://127.0.0.1:3000/beyond-bikes-logo-clean.png"}
+{"timestamp":"00:00:53.019","source":"Browser","level":"DEBUG","message":"#1 85ms Starting renderer for element at 482,186 with size 774x1123"}
+{"timestamp":"00:00:53.019","source":"Browser","level":"DEBUG","message":"#1 86ms Canvas renderer initialized (774x1123) with scale 2"}
+{"timestamp":"00:00:53.019","source":"Browser","level":"DEBUG","message":"#1 96ms Finished rendering"}
+{"timestamp":"00:01:40.575","source":"Browser","level":"DEBUG","message":"#1 0ms Starting document clone with size 1512x785 scrolled to 0,0"}
+{"timestamp":"00:01:40.821","source":"Browser","level":"DEBUG","message":"#1 66ms Document cloned, element located at 482,186 with size 794x1123 using computed rendering"}
+{"timestamp":"00:01:40.821","source":"Browser","level":"DEBUG","message":"#1 66ms Starting DOM parsing"}
+{"timestamp":"00:01:40.821","source":"Browser","level":"DEBUG","message":"#1 70ms Added image http://127.0.0.1:3000/beyond-bikes-logo-clean.png"}
+{"timestamp":"00:01:40.821","source":"Browser","level":"DEBUG","message":"#1 84ms Starting renderer for element at 482,186 with size 794x1123"}
+{"timestamp":"00:01:40.821","source":"Browser","level":"DEBUG","message":"#1 84ms Canvas renderer initialized (794x1123) with scale 2"}
+{"timestamp":"00:01:40.821","source":"Browser","level":"DEBUG","message":"#1 93ms Finished rendering"}
+{"timestamp":"00:01:46.570","source":"Server","level":"LOG","message":"✓ Compiled in 23ms"}
+{"timestamp":"00:02:01.144","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:02:09.215","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:02:40.151","source":"Browser","level":"DEBUG","message":"#1 0ms Starting document clone with size 1512x785 scrolled to 0,0"}
+{"timestamp":"00:02:40.371","source":"Browser","level":"DEBUG","message":"#1 64ms Document cloned, element located at 482,186 with size 794x1123 using computed rendering"}
+{"timestamp":"00:02:40.371","source":"Browser","level":"DEBUG","message":"#1 64ms Starting DOM parsing"}
+{"timestamp":"00:02:40.371","source":"Browser","level":"DEBUG","message":"#1 67ms Added image http://127.0.0.1:3000/beyond-bikes-logo-clean.png"}
+{"timestamp":"00:02:40.371","source":"Browser","level":"DEBUG","message":"#1 74ms Starting renderer for element at 482,186 with size 794x1123"}
+{"timestamp":"00:02:40.371","source":"Browser","level":"DEBUG","message":"#1 74ms Canvas renderer initialized (794x1123) with scale 2"}
+{"timestamp":"00:02:40.371","source":"Browser","level":"DEBUG","message":"#1 79ms Finished rendering"}
+{"timestamp":"00:06:06.648","source":"Server","level":"LOG","message":"✓ Compiled in 4ms"}
+{"timestamp":"00:06:33.840","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:06:43.724","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:06:57.785","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:07:34.004","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:11:19.677","source":"Server","level":"LOG","message":"✓ Compiled in 15ms"}
+{"timestamp":"00:11:32.606","source":"Server","level":"LOG","message":"✓ Compiled in 9ms"}
+{"timestamp":"00:11:53.083","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:11:53.165","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:12:03.264","source":"Server","level":"LOG","message":"✓ Compiled in 13ms"}
+{"timestamp":"00:13:05.629","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:14:00.515","source":"Server","level":"LOG","message":"✓ Compiled in 12ms"}
+{"timestamp":"00:14:09.366","source":"Server","level":"LOG","message":"✓ Compiled in 6ms"}
+{"timestamp":"00:16:41.377","source":"Browser","level":"ERROR","message":"⨯ unhandledRejection: AbortError: Share canceled\n"}
+{"timestamp":"00:16:41.378","source":"Server","level":"ERROR","message":"[browser] \"⨯ unhandledRejection: AbortError: Share canceled\\n\""}
+{"timestamp":"00:17:49.127","source":"Server","level":"LOG","message":"✓ Compiled in 15ms"}
+{"timestamp":"00:17:54.362","source":"Server","level":"LOG","message":"✓ Compiled in 2ms"}
+{"timestamp":"00:24:59.834","source":"Server","level":"LOG","message":"✓ Compiled in 23ms"}
