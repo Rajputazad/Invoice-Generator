@@ -17,6 +17,7 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -31,6 +32,8 @@ body {
 button,
 input,
 textarea {
+  -webkit-appearance: none;
+  appearance: none;
   font: inherit;
 }
 
@@ -232,11 +235,31 @@ label {
 
 input,
 textarea {
+  background: #ffffff;
   border: 1px solid #cfd5d1;
   border-radius: 6px;
   color: #111111;
+  font-size: 16px;
   padding: 10px 11px;
   width: 100%;
+}
+
+input[type="date"] {
+  min-height: 42px;
+}
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: #b42318;
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.12);
+}
+
+.field-error {
+  color: #a21f1f;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.35;
+  margin-top: -2px;
 }
 
 textarea {
@@ -550,6 +573,12 @@ textarea {
     grid-template-columns: 1fr;
   }
 
+  .editor {
+    margin: 0 auto;
+    max-width: 720px;
+    width: 100%;
+  }
+
   .invoice-page {
     justify-self: center;
   }
@@ -558,6 +587,10 @@ textarea {
 @media (max-width: 840px) {
   .app-shell {
     padding: 16px;
+  }
+
+  button {
+    min-height: 44px;
   }
 
   .toolbar {
@@ -579,6 +612,10 @@ textarea {
     justify-content: flex-start;
   }
 
+  .actions button {
+    flex: 1 1 130px;
+  }
+
   .grid-two,
   .settings-grid {
     grid-template-columns: 1fr;
@@ -597,6 +634,7 @@ textarea {
     min-height: auto;
     overflow-x: auto;
     padding: 32px 24px;
+    width: 100%;
   }
 
   .invoice-header,
@@ -638,6 +676,107 @@ textarea {
 
   .totals-panel {
     width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    padding: 10px;
+  }
+
+  .auth-card {
+    padding: 20px;
+  }
+
+  .menu-bar,
+  fieldset,
+  .saved-card,
+  .empty-state {
+    border-radius: 6px;
+  }
+
+  .menu-brand {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .menu-links {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .menu-links button,
+  .menu-bar > button,
+  .actions button,
+  .saved-actions button,
+  .settings-actions button {
+    width: 100%;
+  }
+
+  .toolbar h1 {
+    font-size: 26px;
+  }
+
+  .actions {
+    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .save-state,
+  .form-error {
+    margin: 0;
+  }
+
+  fieldset {
+    padding: 16px;
+  }
+
+  .invoice-page {
+    box-shadow: none;
+    padding: 24px 14px;
+  }
+
+  .invoice-header {
+    padding-bottom: 18px;
+  }
+
+  .invoice-header h2 {
+    font-size: 34px;
+  }
+
+  .invoice-meta p {
+    font-size: 16px;
+  }
+
+  .line-table {
+    min-width: 520px;
+  }
+
+  .invoice-page {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .payment-details p {
+    grid-template-columns: 78px 10px minmax(0, 1fr);
+  }
+
+  .invoice-footer {
+    gap: 12px;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  input,
+  textarea,
+  button {
+    border-radius: 6px;
+  }
+
+  input[type="date"] {
+    line-height: 1.4;
   }
 }
 
