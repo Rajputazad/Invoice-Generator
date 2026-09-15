@@ -44,6 +44,7 @@ type SavedInvoice = InvoiceState & {
 type View = "generator" | "saved" | "settings";
 
 const PASSWORD = "Beyond@961";
+const PASSWORD_ALIASES = [PASSWORD, "Beyond\\@961"];
 const AUTH_KEY = "invoice-generator-auth-v1";
 const DRAFT_KEY = "invoice-generator-state-v3";
 const SAVED_KEY = "invoice-generator-saved-v1";
@@ -56,10 +57,20 @@ function todayDate() {
   return `${year}-${month}-${day}`;
 }
 
+function generateInvoiceNumber() {
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = String(date.getFullYear()).slice(-2);
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `#${day}${month}${year}${hours}${minutes}`;
+}
+
 const defaultInvoice: InvoiceState = {
   companyName: "BEYOND BIKES",
   invoiceTitle: "INVOICE",
-  invoiceNumber: "",
+  invoiceNumber: generateInvoiceNumber(),
   invoiceDate: todayDate(),
   customerName: "",
   customerPhone: "",
@@ -128,7 +139,7 @@ function newItem(): LineItem {
 function freshInvoice(current: InvoiceState): InvoiceState {
   return {
     ...current,
-    invoiceNumber: "",
+    invoiceNumber: generateInvoiceNumber(),
     invoiceDate: todayDate(),
     customerName: "",
     customerPhone: "",
@@ -182,12 +193,18 @@ export default function Home() {
   const [settingsDraft, setSettingsDraft] =
     useState<InvoiceState>(defaultInvoice);
   const [savedInvoices, setSavedInvoices] = useState<SavedInvoice[]>([]);
+  const [savedSearch, setSavedSearch] = useState("");
+  const [settingsEditing, setSettingsEditing] = useState(false);
   const [saveState, setSaveState] = useState("Saved locally");
   const [formError, setFormError] = useState("");
   const showFieldErrors = Boolean(formError);
 
   useEffect(() => {
-    setAuthenticated(window.sessionStorage.getItem(AUTH_KEY) === "true");
+    try {
+      setAuthenticated(window.sessionStorage.getItem(AUTH_KEY) === "true");
+    } catch {
+      setAuthenticated(false);
+    }
 
     const storedDraft = window.localStorage.getItem(DRAFT_KEY);
     const storedSaved = window.localStorage.getItem(SAVED_KEY);
@@ -195,15 +212,19 @@ export default function Home() {
     if (storedDraft) {
       try {
         const parsed = JSON.parse(storedDraft) as InvoiceState;
-        setInvoice({
+        const hydratedInvoice = {
           ...defaultInvoice,
           ...parsed,
+          invoiceNumber: parsed.invoiceNumber?.trim()
+            ? parsed.invoiceNumber
+            : generateInvoiceNumber(),
           items: parsed.items?.length ? parsed.items : defaultInvoice.items,
+        };
+        setInvoice({
+          ...hydratedInvoice,
         });
         setSettingsDraft({
-          ...defaultInvoice,
-          ...parsed,
-          items: parsed.items?.length ? parsed.items : defaultInvoice.items,
+          ...hydratedInvoice,
         });
       } catch {
         window.localStorage.removeItem(DRAFT_KEY);
@@ -241,6 +262,27 @@ export default function Home() {
       total,
     };
   }, [invoice.items, invoice.taxRate]);
+
+  const filteredSavedInvoices = useMemo(() => {
+    const search = savedSearch.trim().toLowerCase();
+
+    if (!search) return savedInvoices;
+
+    return savedInvoices.filter((savedInvoice) => {
+      const searchableText = [
+        savedInvoice.invoiceNumber,
+        savedInvoice.customerName,
+        savedInvoice.customerPhone,
+        savedInvoice.invoiceDate,
+        formatDate(savedInvoice.invoiceDate),
+        ...savedInvoice.items.map((item) => item.description),
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      return searchableText.includes(search);
+    });
+  }, [savedInvoices, savedSearch]);
 
   const validateInvoice = () => {
     if (!invoice.invoiceNumber.trim()) return "Invoice number is required.";
@@ -353,6 +395,7 @@ export default function Home() {
   const openView = (view: View) => {
     if (view === "settings") {
       setSettingsDraft(invoice);
+      setSettingsEditing(false);
     }
 
     setActiveView(view);
@@ -368,24 +411,32 @@ export default function Home() {
       items: current.items,
     }));
     setSaveState("Settings updated");
+    setSettingsEditing(false);
     setActiveView("generator");
   };
 
   const handleLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const enteredPassword = password.trim();
 
-    if (password !== PASSWORD) {
+    if (!PASSWORD_ALIASES.includes(enteredPassword)) {
       setAuthError("Incorrect password");
       return;
     }
 
-    window.sessionStorage.setItem(AUTH_KEY, "true");
+    try {
+      window.sessionStorage.setItem(AUTH_KEY, "true");
+    } catch {
+      // Some mobile/private browsers block storage; keep this session unlocked in memory.
+    }
     setAuthenticated(true);
     setAuthError("");
   };
 
   const logout = () => {
-    window.sessionStorage.removeItem(AUTH_KEY);
+    try {
+      window.sessionStorage.removeItem(AUTH_KEY);
+    } catch {}
     setAuthenticated(false);
     setPassword("");
   };
@@ -450,7 +501,7 @@ export default function Home() {
     setSaveState("Preparing PDF...");
     const [{ default: jsPDF }, logoData] = await Promise.all([
       import("jspdf"),
-      imageToDataUrl("/beyond-bikes-icon.png"),
+      imageToDataUrl("/beyond-bikes-logo-clean.png"),
     ]);
     const pdf = new jsPDF("p", "mm", "a4");
     const left = 20;
@@ -468,10 +519,7 @@ export default function Home() {
       creator: "Beyond Bikes Invoice Generator",
     });
 
-    pdf.addImage(logoData, "PNG", left, 15, 31, 21);
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(11);
-    pdf.text(invoice.companyName, left, 42);
+    pdf.addImage(logoData, "PNG", left, 14, 39, 30);
 
     pdf.setFontSize(28);
     pdf.text(invoice.invoiceTitle, right, 38, { align: "right" });
@@ -739,10 +787,21 @@ Total: ${currency.format(totals.total)}`;
 
       {activeView === "saved" ? (
         <section className="saved-view no-print">
+          <label className="saved-search">
+            Search saved invoices
+            <input
+              type="search"
+              value={savedSearch}
+              onChange={(event) => setSavedSearch(event.target.value)}
+              placeholder="Invoice number, customer, phone, date, or item"
+            />
+          </label>
           {savedInvoices.length === 0 ? (
             <div className="empty-state">No saved invoices yet.</div>
+          ) : filteredSavedInvoices.length === 0 ? (
+            <div className="empty-state">No invoices match your search.</div>
           ) : (
-            savedInvoices.map((savedInvoice) => (
+            filteredSavedInvoices.map((savedInvoice) => (
               <article className="saved-card" key={savedInvoice.id}>
                 <div>
                   <strong>
@@ -786,21 +845,33 @@ Total: ${currency.format(totals.total)}`;
                     step={type === "number" ? "0.1" : undefined}
                     value={settingsDraft[field] as string | number}
                     onChange={updateSettingsField(field)}
+                    disabled={!settingsEditing}
                   />
                 </label>
               ))}
             </div>
             <div className="settings-actions">
-              <button type="button" onClick={saveSettings}>
-                Update and save
-              </button>
-              <button
-                type="button"
-                className="secondary"
-                onClick={() => setSettingsDraft(invoice)}
-              >
-                Reset changes
-              </button>
+              {settingsEditing ? (
+                <>
+                  <button type="button" onClick={saveSettings}>
+                    Update and save
+                  </button>
+                  <button
+                    type="button"
+                    className="secondary"
+                    onClick={() => {
+                      setSettingsDraft(invoice);
+                      setSettingsEditing(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <button type="button" onClick={() => setSettingsEditing(true)}>
+                  Edit
+                </button>
+              )}
             </div>
           </fieldset>
         </form>
@@ -972,10 +1043,11 @@ Total: ${currency.format(totals.total)}`;
 
           <article className="invoice-page" id="invoice">
             <header className="invoice-header">
-              <div className="invoice-logo-lockup" aria-label={invoice.companyName}>
-                <img src="/beyond-bikes-icon.png" alt="" />
-                <span>{invoice.companyName}</span>
-              </div>
+              <img
+                className="invoice-logo"
+                src="/beyond-bikes-logo-clean.png"
+                alt={invoice.companyName}
+              />
               <h2>{invoice.invoiceTitle}</h2>
             </header>
 

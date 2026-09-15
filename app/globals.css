@@ -332,6 +332,17 @@ textarea {
   padding: 18px;
 }
 
+.saved-search {
+  background: #ffffff;
+  border: 1px solid #d8ddda;
+  border-radius: 8px;
+  color: var(--muted);
+  display: grid;
+  font-size: 13px;
+  gap: 8px;
+  padding: 16px 18px;
+}
+
 .saved-card p,
 .saved-card span {
   color: var(--muted);
@@ -352,6 +363,13 @@ textarea {
   display: grid;
   gap: 12px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.settings-grid input:disabled {
+  background: #f4f6f5;
+  color: #5f655f;
+  cursor: not-allowed;
+  -webkit-text-fill-color: #5f655f;
 }
 
 .settings-actions {
@@ -381,24 +399,11 @@ textarea {
   padding-bottom: 28px;
 }
 
-.invoice-logo-lockup {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.invoice-logo-lockup img {
-  height: 56px;
+.invoice-logo {
+  height: 84px;
   object-fit: contain;
   object-position: left center;
-  width: 82px;
-}
-
-.invoice-logo-lockup span {
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  width: 150px;
 }
 
 .invoice-header h2 {
@@ -667,13 +672,9 @@ textarea {
     gap: 20px;
   }
 
-  .invoice-logo-lockup img {
-    height: 48px;
-    width: 72px;
-  }
-
-  .invoice-logo-lockup span {
-    font-size: 14px;
+  .invoice-logo {
+    height: 72px;
+    width: 130px;
   }
 
   .invoice-header h2 {
@@ -844,13 +845,9 @@ textarea {
     width: 210mm;
   }
 
-  .invoice-logo-lockup img {
-    height: 15mm;
-    width: 22mm;
-  }
-
-  .invoice-logo-lockup span {
-    font-size: 12pt;
+  .invoice-logo {
+    height: 22mm;
+    width: 39mm;
   }
 
   .invoice-header h2 {
